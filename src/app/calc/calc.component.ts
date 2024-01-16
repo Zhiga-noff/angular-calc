@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./calc.component.css']
 })
 export class CalcComponent {
+  public result = 0
+  public symbolFlag = ''
+  public actionFlag = ''
+  public count = 0
+  public styleResult = 'fieldResult'
 
 }
