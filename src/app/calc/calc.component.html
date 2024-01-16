@@ -1,9 +1,13 @@
 <div class="container">
-  <div [class]="styleResult"></div>
+  <div [class]="styleResult">{{result}}</div>
   <div class="calcContainer">
-
+    <button class="buttonCalc"
+            *ngFor="let button of numbersButtons" (click)="changeFieldResult(button)">{{button}}</button>
+    <button class="resultNow" (click)="clickToResultButton()">=</button>
   </div>
   <div class='actionButton'>
-
+    <button class="buttonCalc" (click)="actionResult('+')">+</button>
+    <button class="buttonCalc" (click)="actionResult('-')">-</button>
+    <button class="resultNow" (click)="clickToResetButton()">C</button>
   </div>
 </div>
