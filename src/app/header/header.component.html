@@ -1,0 +1,10 @@
+<p [style.color]="myColor" (click)="changeColor('blue')">header works!</p>
+<input type="text" #colorElement>
+<button (click)="changeColor(colorElement.value)">Change color</button>
+
+<button (click)="isShow = !isShow">is show element</button>
+<app-user-card *ngIf="isShow" [user]="user"/>
+
+<ul>
+  <li *ngFor="let item of array">{{item}}</li>
+</ul>
