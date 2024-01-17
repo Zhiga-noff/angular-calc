@@ -1,79 +1,77 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-calc',
   templateUrl: './calc.component.html',
-  styleUrls: ['./calc.component.css']
+  styleUrls: ['./calc.component.css'],
 })
 export class CalcComponent {
-  @Input('calculatorButtons') calculatorButtons
+  @Input('calculatorButtons') calculatorButtons;
 
-  public result = 0
-  public symbolFlag = ''
-  public actionFlag: string | boolean = ''
-  public count = 0
-  public styleResult = 'fieldResult'
-
-  public numbersButtons = []
-  public actionsButtons = []
+  public result = 0;
+  public symbolFlag = '';
+  public actionFlag: boolean = false;
+  public count = 0;
+  public styleResult = 'fieldResult';
+  public numbersButtons = [];
 
   ngOnInit() {
-    this.filterButtonNumbers(this.calculatorButtons)
-
+    this.filterButtonNumbers(this.calculatorButtons);
   }
 
   filterButtonNumbers(buttons) {
-    buttons.forEach(button => {
+    buttons.forEach((button) => {
       if (!isNaN(button)) {
-        this.numbersButtons.push(button)
-        return
+        this.numbersButtons.push(button);
+        return;
       }
-    })
-  }
-
-  clickToResultButton() {
-    // this.getResult()
-    this.count = 0
-    this.symbolFlag = ''
-    this.actionResult(this.actionFlag)
-    this.styleResult = 'fieldResult active'
+    });
   }
 
   clickToResetButton() {
-    this.symbolFlag = ''
-    this.result = 0
-    this.count = 0
-    this.styleResult = 'fieldResult'
+    this.symbolFlag = '';
+    this.result = 0;
+    this.count = 0;
+    this.styleResult = 'fieldResult';
   }
 
-  changeFieldResult(action) {
-    if (this.actionFlag) {
-      this.actionFlag = action
-      this.styleResult = 'fieldResult'
-      return this.result = Number(action)
+  changeFieldResult(button) {
+    if (this.result === 0 || this.actionFlag) {
+      this.result = Number(button);
+      this.actionFlag = false;
+      return;
     }
-
-    const number = `${this.result}` + action
-
-    return this.result = Number(number)
+    this.result = Number(`${this.result}` + `${button}`);
   }
 
-  // getResult() {
-  //   if (this.symbolFlag === '+') {
-  //     this.actionFlag = '+'
-  //     return this.result = this.count + this.result
-  //   }
-  //   if (this.symbolFlag === '-') {
-  //     this.actionFlag = '-'
-  //     return this.result = this.count - this.result
-  //   }
-  // }
+  changeFieldAction(actionButton): number | void {
+    this.symbolFlag = actionButton;
+    this.actionFlag = true;
+    console.log(this.count);
 
-  actionResult(action) {
-    if (this.actionFlag) {
-      return
+    if (this.symbolFlag === '-') {
+      this.count = this.result - this.count;
     }
-    this.actionFlag = !this.actionFlag
+    if (this.symbolFlag === '+') {
+      this.count = this.result + this.count;
+    }
   }
 
+  clickToResultButton() {
+    this.getResult();
+    // this.result = this.count;
+    this.count = 0;
+    this.symbolFlag = '';
+    this.styleResult = 'fieldResult active';
+  }
+
+  getResult() {
+    console.log(this.symbolFlag);
+    if (this.symbolFlag === '+') {
+      this.result = this.count + this.result;
+    }
+    if (this.symbolFlag === '-') {
+      this.result = this.count - this.result;
+    }
+  }
 }
